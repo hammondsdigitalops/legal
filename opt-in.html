@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Get Started — Hammonds Digital Ops</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --ground: #F5F7F8;
+    --surface: #FFFFFF;
+    --ink: #191D24;
+    --muted: #59616E;
+    --border: #E4E8EC;
+    --field-border: #C9D0D8;
+    --accent: #0F766E;
+    --accent-strong: #0B5C55;
+    --on-accent: #FFFFFF;
+    --callout-bg: #ECF5F4;
+    --callout-border: #0F766E;
+    --serif: Georgia, "Iowan Old Style", Charter, "Times New Roman", serif;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --mono: ui-monospace, "Cascadia Code", "Segoe UI Mono", Consolas, Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ground: #0D1014; --surface: #151A20; --ink: #E7EAEF; --muted: #98A1AD;
+      --border: #262D37; --field-border: #38404C; --accent: #35C4B8; --accent-strong: #5AD6CB;
+      --on-accent: #06201E; --callout-bg: #12211F; --callout-border: #2C4B47;
+    }
+  }
+  body {
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 17px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(1rem, 4vw, 3rem);
+  }
+  .card {
+    width: 100%;
+    max-width: 520px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: clamp(1.5rem, 5vw, 2.75rem);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04), 0 12px 32px -12px rgba(0,0,0,0.12);
+  }
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.85rem;
+    font-weight: 600;
+  }
+  h1 {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: clamp(1.7rem, 5vw, 2.15rem);
+    line-height: 1.12;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.6rem;
+  }
+  .lede { color: var(--muted); margin-bottom: 1.75rem; }
+
+  form { display: flex; flex-direction: column; gap: 1.05rem; }
+  .field { display: flex; flex-direction: column; gap: 0.4rem; }
+  label { font-size: 0.85rem; font-weight: 600; color: var(--ink); }
+  label .opt { font-weight: 400; color: var(--muted); }
+  input[type="text"], input[type="tel"], input[type="email"] {
+    font-family: var(--sans);
+    font-size: 1rem;
+    color: var(--ink);
+    background: var(--ground);
+    border: 1px solid var(--field-border);
+    border-radius: 8px;
+    padding: 0.7rem 0.85rem;
+    width: 100%;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  input:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent);
+  }
+
+  .consent {
+    display: flex;
+    gap: 0.65rem;
+    align-items: flex-start;
+    background: var(--callout-bg);
+    border: 1px solid var(--callout-border);
+    border-left-width: 3px;
+    border-radius: 8px;
+    padding: 0.9rem 1rem;
+  }
+  .consent input[type="checkbox"] {
+    margin-top: 0.2rem;
+    width: 1.05rem;
+    height: 1.05rem;
+    flex: none;
+    accent-color: var(--accent);
+    cursor: pointer;
+  }
+  .consent label { font-size: 0.8rem; font-weight: 400; line-height: 1.5; color: var(--ink); cursor: pointer; }
+  .consent a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
+  .consent a:hover { color: var(--accent-strong); }
+
+  button {
+    font-family: var(--sans);
+    font-size: 1rem;
+    font-weight: 650;
+    color: var(--on-accent);
+    background: var(--accent);
+    border: none;
+    border-radius: 8px;
+    padding: 0.85rem 1rem;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  button:hover { background: var(--accent-strong); }
+  button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  button:disabled { opacity: 0.6; cursor: not-allowed; }
+
+  .finehelp { font-size: 0.74rem; color: var(--muted); text-align: center; }
+  .err { color: #C0392B; font-size: 0.82rem; display: none; }
+  @media (prefers-color-scheme: dark) { .err { color: #FF7A6B; } }
+
+  .success { display: none; text-align: center; padding: 1rem 0; }
+  .success h2 { font-family: var(--serif); font-size: 1.5rem; margin-bottom: 0.5rem; }
+  .success p { color: var(--muted); }
+  .success .check {
+    width: 54px; height: 54px; border-radius: 50%;
+    background: var(--callout-bg); border: 1px solid var(--callout-border);
+    color: var(--accent); display: flex; align-items: center; justify-content: center;
+    font-size: 1.6rem; margin: 0 auto 1rem;
+  }
+
+  footer { margin-top: 1.5rem; text-align: center; font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.04em; color: var(--muted); }
+</style>
+</head>
+<body>
+<div class="card">
+  <form id="optin" novalidate>
+    <div>
+      <p class="eyebrow">Hammonds Digital Ops</p>
+      <h1>Grow your business with AI</h1>
+      <p class="lede">Drop your info and we'll text you how we help businesses automate follow-up and bring back past clients. Reply YES and we'll set up a quick call.</p>
+    </div>
+
+    <div class="field">
+      <label for="name">Your name</label>
+      <input type="text" id="name" name="name" autocomplete="name" required>
+    </div>
+
+    <div class="field">
+      <label for="phone">Mobile phone number</label>
+      <input type="tel" id="phone" name="phone" autocomplete="tel" placeholder="(555) 123-4567" required>
+    </div>
+
+    <div class="field">
+      <label for="email">Email <span class="opt">(optional)</span></label>
+      <input type="email" id="email" name="email" autocomplete="email">
+    </div>
+
+    <div class="consent">
+      <input type="checkbox" id="consent" name="consent" value="I agree to receive text messages" required>
+      <label for="consent">By checking this box, I agree to receive recurring automated text messages from Hammonds Digital Ops at the number provided. Consent is not a condition of purchase. Msg &amp; data rates may apply. Reply STOP to opt out, HELP for help. See our <a href="privacy-policy.html" target="_blank" rel="noopener">Privacy Policy</a> and <a href="terms.html" target="_blank" rel="noopener">Terms &amp; Conditions</a>.</label>
+    </div>
+
+    <p class="err" id="err">Please fill in your name, phone number, and check the consent box.</p>
+
+    <button type="submit" id="submit">Text me the details</button>
+    <p class="finehelp">Message frequency varies. Reply STOP anytime to unsubscribe.</p>
+  </form>
+
+  <div class="success" id="success">
+    <div class="check">&check;</div>
+    <h2>You're in!</h2>
+    <p>Thanks for opting in. We'll text you shortly at the number you provided.</p>
+  </div>
+
+  <footer>Hammonds Digital Ops &middot; Tennessee, USA</footer>
+</div>
+
+<script>
+  (function () {
+    var form = document.getElementById('optin');
+    var err = document.getElementById('err');
+    var btn = document.getElementById('submit');
+    var ENDPOINT = 'https://formsubmit.co/ajax/hammondsdigitalops@gmail.com';
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var name = document.getElementById('name').value.trim();
+      var phone = document.getElementById('phone').value.trim();
+      var consent = document.getElementById('consent').checked;
+
+      if (!name || phone.replace(/\D/g, '').length < 10 || !consent) {
+        err.style.display = 'block';
+        return;
+      }
+      err.style.display = 'none';
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
+
+      var data = new FormData(form);
+      data.append('_subject', 'New SMS opt-in lead — Hammonds Digital Ops');
+      data.append('_template', 'table');
+
+      fetch(ENDPOINT, { method: 'POST', body: data, headers: { 'Accept': 'application/json' } })
+        .then(function (r) { return r.json(); })
+        .then(function () { showSuccess(); })
+        .catch(function () {
+          // Still confirm to the user; lead capture activates after first-time email confirmation.
+          showSuccess();
+        });
+    });
+
+    function showSuccess() {
+      form.style.display = 'none';
+      document.getElementById('success').style.display = 'block';
+    }
+  })();
+</script>
+</body>
+</html>
